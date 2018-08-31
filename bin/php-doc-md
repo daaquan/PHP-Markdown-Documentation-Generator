@@ -1,20 +1,7 @@
 #!/usr/bin/env php
 <?php
-$autoLoadPaths = [
-    __DIR__ . '/vendor/autoload.php',
-    __DIR__ . '/../vendor/autoload.php',
-    __DIR__ . '/../../../autoload.php'
-];
-foreach ($autoLoadPaths as $autoloader) {
-    if (file_exists($autoloader)) {
-        require $autoloader;
-        break;
-    }
-}
+//
+require __DIR__ . '/../vendor/autoload.php';
 
-use DocsMd\Console\CLI;
-
-$cli = new CLI();
-$code = $cli->run();
-
-exit($code);
+(new DocsMd\Console\CLI())
+    ->run();

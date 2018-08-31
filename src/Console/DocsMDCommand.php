@@ -18,6 +18,7 @@ class DocsMdCommand extends \Symfony\Component\Console\Command\Command
 {
     const ARG_CLASS = 'class';
     const OPT_BOOTSTRAP = 'bootstrap';
+    const OPT_COMPOSER = 'composer';
     const OPT_IGNORE = 'ignore';
 
     /**
@@ -32,8 +33,19 @@ class DocsMdCommand extends \Symfony\Component\Console\Command\Command
     private function getClassEntity($name)
     {
         if (!isset($this->memory[$name])) {
-            $reflector = new Reflector($name);
-            $this->memory[$name] = $reflector->getClassEntity();
+            try {
+                $reflector = new Reflector($name);
+                $this->memory[$name] = $reflector->getClassEntity();
+            } catch (\Exception $exception) {
+                //
+                $obj = new class {
+                    public function hasIgnoreTag()
+                    {
+                        return true;
+                    }
+                };
+                $this->memory[$name] = $obj;
+            }
         }
         return $this->memory[$name];
     }
@@ -55,6 +67,13 @@ class DocsMdCommand extends \Symfony\Component\Console\Command\Command
                 'File to be included before generating documentation'
             )
             ->addOption(
+                self::OPT_COMPOSER,
+                'c',
+                InputOption::VALUE_REQUIRED,
+                'Directory of composer.json',
+                ''
+            )
+            ->addOption(
                 self::OPT_IGNORE,
                 'i',
                 InputOption::VALUE_REQUIRED,
@@ -73,6 +92,7 @@ class DocsMdCommand extends \Symfony\Component\Console\Command\Command
     {
         $classes = $input->getArgument(self::ARG_CLASS);
         $bootstrap = $input->getOption(self::OPT_BOOTSTRAP);
+        $composer = $input->getOption(self::OPT_COMPOSER);
         $ignore = explode(',', $input->getOption(self::OPT_IGNORE));
         $requestingOneClass = false;
 
@@ -81,6 +101,7 @@ class DocsMdCommand extends \Symfony\Component\Console\Command\Command
         }
 
         $classCollection = [];
+
         if (strpos($classes, ',') !== false) {
             foreach (explode(',', $classes) as $class) {
                 if (class_exists($class) || interface_exists($class)) {
@@ -92,6 +113,11 @@ class DocsMdCommand extends \Symfony\Component\Console\Command\Command
             $requestingOneClass = true;
         } elseif (is_dir($classes)) {
             $classCollection = $this->findClassesInDir($classes, [], $ignore);
+        } elseif ($composer) {
+            $json = json_decode(file_get_contents(realpath($composer) . '/composer.json'), 1);
+            foreach ($json['autoload']['psr-4'] as $namespace => $directory) {
+                $classCollection = $this->findClassesInDir(realpath($composer) . '/' . $directory, [], $ignore);
+            }
         } else {
             throw new \InvalidArgumentException('Given input is neither a class nor a source directory');
         }
@@ -259,7 +285,7 @@ class DocsMdCommand extends \Symfony\Component\Console\Command\Command
             /** @var \SplFileInfo $f */
             if ($f->isFile() && !$f->isLink()) {
                 list($ns, $className) = $this->findClassInFile($f->getRealPath());
-                if ($className && (class_exists($className, true) || interface_exists($className))) {
+                if ($className) { //  && (class_exists($className, true) || interface_exists($className))
                     $collection[$ns][] = $className;
                 }
             } elseif ($f->isDir() && !$f->isLink() && !$this->shouldIgnoreDirectory($f->getFilename(), $ignores)) {
