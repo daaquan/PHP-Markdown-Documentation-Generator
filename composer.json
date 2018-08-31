@@ -2,9 +2,9 @@
   "name": "daaquan/php-markdown-documentation-generator",
   "description": "Command line tool for generating markdown-formatted class documentation",
   "minimum-stability": "dev",
-  "homepage": "https://github.com/daaquan/PHP-Markdown-Documentation-Generator",
+  "homepage": "https://github.com/daaquan/php-markdown-documentation-generator",
   "license": "MIT",
-  "version": "1.3.8",
+  "version": "2.0",
   "authors": [{
       "name": "Victor Jonsson",
       "email": "kontakt@victorjonsson.se"
