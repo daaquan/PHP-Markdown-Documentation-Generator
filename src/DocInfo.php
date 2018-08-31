@@ -1,12 +1,12 @@
 <?php
 
-namespace PHPDocsMD;
+namespace DocsMd;
 
 /**
  * Class containing information about a function/class that's being made
  * available via a comment block
  *
- * @package PHPDocsMD
+ * @package DocsMd
  */
 class DocInfo
 {

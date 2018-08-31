@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPDocsMD\Console;
+namespace DocsMd\Console;
 
-use PHPDocsMD\MDTableGenerator;
-use PHPDocsMD\Reflector;
-use PHPDocsMD\Utils;
+use DocsMd\MDTableGenerator;
+use DocsMd\Reflector;
+use DocsMd\Utils;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
@@ -12,9 +12,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Console command used to extract markdown-formatted documentation from classes
- * @package PHPDocsMD\Console
+ * @package DocsMd\Console
  */
-class PHPDocsMDCommand extends \Symfony\Component\Console\Command\Command
+class DocsMdCommand extends \Symfony\Component\Console\Command\Command
 {
     const ARG_CLASS = 'class';
     const OPT_BOOTSTRAP = 'bootstrap';
@@ -27,7 +27,7 @@ class PHPDocsMDCommand extends \Symfony\Component\Console\Command\Command
 
     /**
      * @param $name
-     * @return \PHPDocsMD\ClassEntity
+     * @return \DocsMd\ClassEntity
      */
     private function getClassEntity($name)
     {
@@ -81,8 +81,6 @@ class PHPDocsMDCommand extends \Symfony\Component\Console\Command\Command
         }
 
         $classCollection = [];
-        print_r($classes);
-        exit;
         if (strpos($classes, ',') !== false) {
             foreach (explode(',', $classes) as $class) {
                 if (class_exists($class) || interface_exists($class)) {

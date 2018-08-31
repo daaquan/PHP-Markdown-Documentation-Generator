@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPDocsMD;
+namespace DocsMd;
 
 /**
  * Class capable of creating ClassEntity objects
- * @package PHPDocsMD
+ * @package DocsMd
  */
 class ClassEntityFactory
 {

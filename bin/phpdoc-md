@@ -12,7 +12,7 @@ foreach ($autoLoadPaths as $autoloader) {
     }
 }
 
-use PHPDocsMD\Console\CLI;
+use DocsMd\Console\CLI;
 
 $cli = new CLI();
 $code = $cli->run();

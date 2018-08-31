@@ -157,7 +157,7 @@ class ClassWithStaticFunc
     }
 }
 
-use PHPDocsMD\Console\CLI;
+use DocsMd\Console\CLI;
 
 interface InterfaceReferringToImportedClass
 {

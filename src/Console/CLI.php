@@ -1,23 +1,18 @@
 <?php
 
-namespace PHPDocsMD\Console;
+namespace DocsMd\Console;
 
+use DocsMd\Console\DocsMdCommand;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Command line interface used to extract markdown-formatted documentation from classes
- * @package PHPDocsMD\Console
+ * @package DocsMd\Console
  */
 class CLI extends Application
 {
-    public function __construct()
-    {
-        $json = json_decode(file_get_contents(__DIR__ . '/../../../composer.json'));
-        parent::__construct('PHP Markdown Documentation Generator', $json->version);
-    }
-
     /**
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Input\OutputInterface $output
@@ -25,7 +20,7 @@ class CLI extends Application
      */
     public function run(InputInterface $input = null, OutputInterface $output = null)
     {
-        $this->add(new PHPDocsMDCommand());
+        $this->add(new DocsMdCommand());
         return parent::run($input, $output);
     }
 }

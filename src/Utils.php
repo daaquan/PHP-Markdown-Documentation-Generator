@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPDocsMD;
+namespace DocsMd;
 
 /**
- * @package PHPDocsMD
+ * @package DocsMd
  */
 class Utils
 {

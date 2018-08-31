@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPDocsMD;
+namespace DocsMd;
 
 /**
  * Class that can create a markdown-formatted table describing class functions
@@ -9,7 +9,7 @@ namespace PHPDocsMD;
  * @example
  * <code>
  *  <?php
- *      $generator = new PHPDocsMD\MDTableGenerator();
+ *      $generator = new DocsMd\MDTableGenerator();
  *      $generator->openTable();
  *      foreach($classEntity->getFunctions() as $func) {
  *              $generator->addFunc( $func );
@@ -17,7 +17,7 @@ namespace PHPDocsMD;
  *      echo $generator->getTable();
  * </code>
  *
- * @package PHPDocsMD
+ * @package DocsMd
  */
 class MDTableGenerator
 {

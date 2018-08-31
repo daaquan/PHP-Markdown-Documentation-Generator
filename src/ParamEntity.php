@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPDocsMD;
+namespace DocsMd;
 
 /**
  * Object describing a function parameter
- * @package PHPDocsMD
+ * @package DocsMd
  */
 class ParamEntity extends CodeEntity
 {

@@ -4,10 +4,10 @@ class MDTableGeneratorTest extends PHPUnit_Framework_TestCase
 {
     public function testDeprecatedFunc()
     {
-        $tbl = new \PHPDocsMD\MDTableGenerator();
+        $tbl = new \DocsMd\MDTableGenerator();
         $tbl->openTable();
 
-        $deprecated = new \PHPDocsMD\FunctionEntity();
+        $deprecated = new \DocsMd\FunctionEntity();
         $deprecated->isDeprecated(true);
         $deprecated->setDeprecationMessage('Is deprecated');
         $deprecated->setName('myFunc');
@@ -27,10 +27,10 @@ class MDTableGeneratorTest extends PHPUnit_Framework_TestCase
 
     public function testFunc()
     {
-        $tbl = new \PHPDocsMD\MDTableGenerator();
+        $tbl = new \DocsMd\MDTableGenerator();
         $tbl->openTable();
 
-        $func = new \PHPDocsMD\FunctionEntity();
+        $func = new \DocsMd\FunctionEntity();
         $func->setName('myFunc');
         $tbl->addFunc($func);
 
@@ -44,10 +44,10 @@ class MDTableGeneratorTest extends PHPUnit_Framework_TestCase
 
     public function testFuncWithAllFeatures()
     {
-        $tbl = new \PHPDocsMD\MDTableGenerator();
+        $tbl = new \DocsMd\MDTableGenerator();
         $tbl->openTable();
 
-        $func = new \PHPDocsMD\FunctionEntity();
+        $func = new \DocsMd\FunctionEntity();
 
         $this->assertFalse($func->isStatic());
         $this->assertFalse($func->hasParams());
@@ -63,13 +63,13 @@ class MDTableGeneratorTest extends PHPUnit_Framework_TestCase
 
         $params = array();
 
-        $paramA = new \PHPDocsMD\ParamEntity();
+        $paramA = new \DocsMd\ParamEntity();
         $paramA->setName('$var');
         $paramA->setType('mixed');
         $paramA->setDefault('null');
         $params[] = $paramA;
 
-        $paramB = new \PHPDocsMD\ParamEntity();
+        $paramB = new \DocsMd\ParamEntity();
         $paramB->setName('$other');
         $paramB->setType('string');
         $paramB->setDefault("'test'");
@@ -93,10 +93,10 @@ class MDTableGeneratorTest extends PHPUnit_Framework_TestCase
 
     public function testToggleDeclaringAbstraction()
     {
-        $tbl = new \PHPDocsMD\MDTableGenerator();
+        $tbl = new \DocsMd\MDTableGenerator();
         $tbl->openTable();
 
-        $func = new \PHPDocsMD\FunctionEntity();
+        $func = new \DocsMd\FunctionEntity();
         $func->isAbstract(true);
         $func->setName('someFunc');
 

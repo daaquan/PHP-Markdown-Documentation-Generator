@@ -34,7 +34,7 @@ class UseInspectorTest extends PHPUnit_Framework_TestCase
             '\\apa'
         );
 
-        $inspector = new \PHPDocsMD\UseInspector();
+        $inspector = new \DocsMd\UseInspector();
         $this->assertEquals($expected, $inspector->getUseStatementsInString($code));
     }
 }

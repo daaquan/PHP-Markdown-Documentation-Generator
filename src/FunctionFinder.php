@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPDocsMD;
+namespace DocsMd;
 
 /**
  * Find a specific function in a class or an array of classes
- * @package PHPDocsMD
+ * @package DocsMd
  */
 class FunctionFinder
 {

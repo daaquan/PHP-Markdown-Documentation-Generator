@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPDocsMD;
+namespace DocsMd;
 
 /**
  * Object describing a piece of code
- * @package PHPDocsMD
+ * @package DocsMd
  */
 class CodeEntity
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPDocsMD;
+namespace DocsMd;
 
 /**
  * Class that can extract information from a function/class comment
- * @package PHPDocsMD
+ * @package DocsMd
  */
 class DocInfoExtractor
 {

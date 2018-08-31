@@ -1,16 +1,16 @@
 <?php
 
-namespace PHPDocsMD;
+namespace DocsMd;
 
 /**
  * Object describing a function
- * @package PHPDocsMD
+ * @package DocsMd
  */
 class FunctionEntity extends CodeEntity
 {
 
     /**
-     * @var \PHPDocsMD\ParamEntity[]
+     * @var \DocsMd\ParamEntity[]
      */
     private $params = [];
 
@@ -89,7 +89,7 @@ class FunctionEntity extends CodeEntity
     }
 
     /**
-     * @param \PHPDocsMD\ParamEntity[] $params
+     * @param \DocsMd\ParamEntity[] $params
      */
     public function setParams(array $params)
     {
@@ -97,7 +97,7 @@ class FunctionEntity extends CodeEntity
     }
 
     /**
-     * @return \PHPDocsMD\ParamEntity[]
+     * @return \DocsMd\ParamEntity[]
      */
     public function getParams()
     {

@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPDocsMD;
+namespace DocsMd;
 
 /**
  * Class that can extract all use statements in a file
- * @package PHPDocsMD
+ * @package DocsMd
  */
 class UseInspector
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace PHPDocsMD;
+namespace DocsMd;
 
 use ReflectionMethod;
 
 /**
  * Class that can compute ClassEntity objects out of real classes
- * @package PHPDocsMD
+ * @package DocsMd
  */
 class Reflector implements ReflectorInterface
 {
@@ -67,7 +67,7 @@ class Reflector implements ReflectorInterface
     }
 
     /**
-     * @return \PHPDocsMD\ClassEntity
+     * @return \DocsMd\ClassEntity
      */
     public function getClassEntity()
     {
