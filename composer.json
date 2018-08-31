@@ -4,7 +4,7 @@
   "minimum-stability": "dev",
   "homepage": "https://github.com/daaquan/php-markdown-documentation-generator",
   "license": "MIT",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "authors": [{
       "name": "Victor Jonsson",
       "email": "kontakt@victorjonsson.se"
@@ -14,10 +14,10 @@
     }],
   "require": {
     "php": ">=7.1.0",
-    "symfony/console": "^4.2@dev",
-    "symfony/dependency-injection": "^4.2@dev",
-    "symfony/event-dispatcher": "^4.2@dev",
-    "psr/log": "^1.0@dev"
+    "symfony/console": "^4.2",
+    "symfony/dependency-injection": "^4.2",
+    "symfony/event-dispatcher": "^4.2",
+    "psr/log": "^1.0"
   },
   "require-dev": {
     "phpunit/phpunit": "~4.5"
