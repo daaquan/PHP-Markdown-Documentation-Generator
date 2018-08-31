@@ -1,4 +1,5 @@
 <?php
+
 namespace Acme;
 
 /**
@@ -7,7 +8,8 @@ namespace Acme;
  *
  * @package Acme
  */
-abstract class ExampleClass implements \Reflector {
+abstract class ExampleClass implements \Reflector
+{
 
     /**
      * Description of a*a
@@ -15,8 +17,8 @@ abstract class ExampleClass implements \Reflector {
      * @param array $arr
      * @param int $bool
      */
-    public function funcA($arg, array $arr, $bool=10) {
-
+    public function funcA($arg, array $arr, $bool = 10)
+    {
     }
 
     /**
@@ -27,8 +29,8 @@ abstract class ExampleClass implements \Reflector {
      * @param int $bool
      * @return \Acme\ExampleClass
      */
-    protected function funcC($arg, array $arr, $bool=10) {
-
+    protected function funcC($arg, array $arr, $bool = 10)
+    {
     }
 
     /**
@@ -45,29 +47,34 @@ abstract class ExampleClass implements \Reflector {
      * @param array $arr
      * @param int $bool
      */
-    function funcB($arg, array $arr, $bool=10) {
-
+    public function funcB($arg, array $arr, $bool = 10)
+    {
     }
 
-    function funcD($arg, $arr=array(), ExampleInterface $depr=null, \stdClass $class) {
-
+    public function funcD($arg, $arr = array(), ExampleInterface $depr = null, \stdClass $class)
+    {
     }
 
-    function getFunc() {}
-    function hasFunc() {}
-    abstract function isFunc();
+    public function getFunc()
+    {
+    }
+
+    public function hasFunc()
+    {
+    }
+
+    abstract public function isFunc();
 
     /**
      * @ignore
      */
-    function someFunc() {
-
+    public function someFunc()
+    {
     }
 
-    private function privFunc() {
-
+    private function privFunc()
+    {
     }
-
 }
 
 /**
@@ -77,8 +84,8 @@ abstract class ExampleClass implements \Reflector {
  *
  * @package Acme
  */
-class ExampleClassDepr {
-
+class ExampleClassDepr
+{
 }
 
 /**
@@ -86,72 +93,82 @@ class ExampleClassDepr {
  * @package Acme
  * @ignore
  */
-interface ExampleInterface {
+interface ExampleInterface
+{
 
     /**
      * @param string $arg
      * @return \stdClass
      */
-    public function func($arg='a');
-
+    public function func($arg = 'a');
 }
 
-class SomeClass {
+class SomeClass
+{
 
     /**
      * @return int
      */
-    public function aMethod() {}
-
+    public function aMethod()
+    {
+    }
 }
 
-class ClassImplementingInterface extends SomeClass implements ExampleInterface {
+class ClassImplementingInterface extends SomeClass implements ExampleInterface
+{
+
     /**
      * @inheritdoc
      */
-    public function func($arg='a') {}
+    public function func($arg = 'a')
+    {
+    }
 
     /**
      * @inheritDoc
      */
-    public function aMethod() {}
+    public function aMethod()
+    {
+    }
 
     /**
      * @return \FilesystemIterator
      */
-    public function methodReturnNativeClass() {}
+    public function methodReturnNativeClass()
+    {
+    }
 
     /**
      * @return \FilesystemIterator[]
      */
-    public function methodReturningArrayNativeClass() {}
+    public function methodReturningArrayNativeClass()
+    {
+    }
 }
 
-
-
-class ClassWithStaticFunc {
+class ClassWithStaticFunc
+{
 
     /**
      * @return float
      */
-    static function somStaticFunc() {
-
+    public static function somStaticFunc()
+    {
     }
-
 }
 
 use PHPDocsMD\Console\CLI;
 
-interface InterfaceReferringToImportedClass {
+interface InterfaceReferringToImportedClass
+{
 
     /**
      * @return CLI
      */
-    function theFunc();
+    public function theFunc();
 
     /**
      * @return CLI[]
      */
-    function funcReturningArr();
-
+    public function funcReturningArr();
 }

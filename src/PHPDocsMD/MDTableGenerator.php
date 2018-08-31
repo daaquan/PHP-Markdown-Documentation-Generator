@@ -1,6 +1,6 @@
 <?php
-namespace PHPDocsMD;
 
+namespace PHPDocsMD;
 
 /**
  * Class that can create a markdown-formatted table describing class functions
@@ -19,7 +19,8 @@ namespace PHPDocsMD;
  *
  * @package PHPDocsMD
  */
-class MDTableGenerator {
+class MDTableGenerator
+{
 
     /**
      * @var string
@@ -68,15 +69,15 @@ class MDTableGenerator {
      *
      * @param bool $toggle
      */
-    function appendExamplesToEndOfTable($toggle)
+    public function appendExamplesToEndOfTable($toggle)
     {
-        $this->appendExamples = (bool)$toggle;
+        $this->appendExamples = (bool) $toggle;
     }
 
     /**
      * Begin generating a new markdown-formatted table
      */
-    function openTable()
+    public function openTable()
     {
         $this->examples = [];
         $this->markdown = ''; // Clear table
@@ -90,8 +91,9 @@ class MDTableGenerator {
      * should be declared as abstract in the table
      * @param bool $toggle
      */
-    function doDeclareAbstraction($toggle) {
-        $this->declareAbstraction = (bool)$toggle;
+    public function doDeclareAbstraction($toggle)
+    {
+        $this->declareAbstraction = (bool) $toggle;
     }
 
     /**
@@ -101,48 +103,50 @@ class MDTableGenerator {
      * @param FunctionEntity $func
      * @return string
      */
-    function addFunc(FunctionEntity $func)
+    public function addFunc(FunctionEntity $func)
     {
         $this->fullClassName = $func->getClass();
 
         $str = '<strong>';
 
-        if( $this->declareAbstraction && $func->isAbstract() )
+        if ($this->declareAbstraction && $func->isAbstract()) {
             $str .= 'abstract ';
+        }
 
-        $str .=  $func->getName().'(';
+        $str .= $func->getName() . '(';
 
-        if( $func->hasParams() ) {
+        if ($func->hasParams()) {
             $params = [];
-            foreach($func->getParams() as $param) {
-                $paramStr = '<em>'.$param->getType().'</em> <strong>'.$param->getName();
-                if( $param->getDefault() ) {
-                    $paramStr .= '='.$param->getDefault();
+            foreach ($func->getParams() as $param) {
+                $paramStr = '<em>' . $param->getType() . '</em> <strong>' . $param->getName();
+                if ($param->getDefault()) {
+                    $paramStr .= '=' . $param->getDefault();
                 }
                 $paramStr .= '</strong>';
                 $params[] = $paramStr;
             }
-            $str .= '</strong>'.implode(', ', $params) .')';
+            $str .= '</strong>' . implode(', ', $params) . ')';
         } else {
             $str .= ')';
         }
 
-        $str .= '</strong> : <em>'.$func->getReturnType().'</em>';
+        $str .= '</strong> : <em>' . $func->getReturnType() . '</em>';
 
-        if( $func->isDeprecated() ) {
-            $str = '<strike>'.$str.'</strike>';
-            $str .= '<br /><em>DEPRECATED - '.$func->getDeprecationMessage().'</em>';
-        } elseif( $func->getDescription() ) {
-            $str .= '<br /><em>'.$func->getDescription().'</em>';
+        if ($func->isDeprecated()) {
+            $str = '<strike>' . $str . '</strike>';
+            $str .= '<br /><em>DEPRECATED - ' . $func->getDeprecationMessage() . '</em>';
+        } elseif ($func->getDescription()) {
+            $str .= '<br /><em>' . $func->getDescription() . '</em>';
         }
 
-        $str = str_replace(['</strong><strong>', '</strong></strong> '], ['','</strong>'], trim($str));
+        $str = str_replace(['</strong><strong>', '</strong></strong> '], ['', '</strong>'], trim($str));
 
-        if( $func->getExample() )
+        if ($func->getExample()) {
             $this->examples[$func->getName()] = $func->getExample();
+        }
 
-        $firstCol =  $func->getVisibility() . ($func->isStatic() ? ' static':'');
-        $markDown = '| '.$firstCol.' | '.$str.' |';
+        $firstCol = $func->getVisibility() . ($func->isStatic() ? ' static' : '');
+        $markDown = '| ' . $firstCol . ' | ' . $str . ' |';
 
         $this->add($markDown);
         return $markDown;
@@ -151,10 +155,10 @@ class MDTableGenerator {
     /**
      * @return string
      */
-    function getTable()
+    public function getTable()
     {
         $tbl = trim($this->markdown);
-        if( $this->appendExamples && !empty($this->examples) ) {
+        if ($this->appendExamples && !empty($this->examples)) {
             $className = Utils::getClassBaseName($this->fullClassName);
             foreach ($this->examples as $funcName => $example) {
                 $tbl .= sprintf("\n###### Examples of %s::%s()\n%s", $className, $funcName, self::formatExampleComment($example));
@@ -173,10 +177,9 @@ class MDTableGenerator {
         // Remove possible code tag
         $example = self::stripCodeTags($example);
 
-        if( preg_match('/(\n       )/', $example) ) {
+        if (preg_match('/(\n       )/', $example)) {
             $example = preg_replace('/(\n       )/', "\n", $example);
-        }
-        elseif( preg_match('/(\n    )/', $example) ) {
+        } elseif (preg_match('/(\n    )/', $example)) {
             $example = preg_replace('/(\n    )/', "\n", $example);
         } else {
             $example = preg_replace('/(\n   )/', "\n", $example);
@@ -184,10 +187,9 @@ class MDTableGenerator {
         $type = '';
 
         // A very naive analysis of the programming language used in the comment
-        if( strpos($example, '<?php') !== false ) {
+        if (strpos($example, '<?php') !== false) {
             $type = 'php';
-        }
-        elseif( strpos($example, 'var ') !== false && strpos($example, '</') === false ) {
+        } elseif (strpos($example, 'var ') !== false && strpos($example, '</') === false) {
             $type = 'js';
         }
 
@@ -199,6 +201,6 @@ class MDTableGenerator {
      */
     private function add($str)
     {
-        $this->markdown .= $str .PHP_EOL;
+        $this->markdown .= $str . PHP_EOL;
     }
 }

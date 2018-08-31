@@ -1,8 +1,8 @@
 <?php
 
-class UseInspectorTest extends PHPUnit_Framework_TestCase {
-
-    function testInspection()
+class UseInspectorTest extends PHPUnit_Framework_TestCase
+{
+    public function testInspection()
     {
         $code = '
         Abra
@@ -37,6 +37,4 @@ class UseInspectorTest extends PHPUnit_Framework_TestCase {
         $inspector = new \PHPDocsMD\UseInspector();
         $this->assertEquals($expected, $inspector->getUseStatementsInString($code));
     }
-
-
 }

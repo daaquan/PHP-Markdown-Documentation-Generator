@@ -1,22 +1,23 @@
 <?php
-namespace PHPDocsMD;
 
+namespace PHPDocsMD;
 
 /**
  * Object describing a function parameter
  * @package PHPDocsMD
  */
-class ParamEntity extends CodeEntity {
+class ParamEntity extends CodeEntity
+{
 
     /**
      * @var bool
      */
-    private $default=false;
+    private $default = false;
 
     /**
      * @var string
      */
-    private $type='mixed';
+    private $type = 'mixed';
 
     /**
      * @param boolean $default
@@ -55,7 +56,7 @@ class ParamEntity extends CodeEntity {
      */
     public function getNativeClassType()
     {
-        foreach(explode('/', $this->type) as $typeDeclaration) {
+        foreach (explode('/', $this->type) as $typeDeclaration) {
             if (Utils::isNativeClassReference($typeDeclaration)) {
                 return $typeDeclaration;
             }
@@ -63,4 +64,3 @@ class ParamEntity extends CodeEntity {
         return null;
     }
 }
-

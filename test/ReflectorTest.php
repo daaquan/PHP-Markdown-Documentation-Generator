@@ -1,6 +1,7 @@
 <?php
 
-class ReflectorTest extends PHPUnit_Framework_TestCase {
+class ReflectorTest extends PHPUnit_Framework_TestCase
+{
 
     /**
      * @var \PHPDocsMD\Reflector
@@ -19,7 +20,7 @@ class ReflectorTest extends PHPUnit_Framework_TestCase {
         $this->class = $this->reflector->getClassEntity();
     }
 
-    function testClass()
+    public function testClass()
     {
         $this->assertEquals('\\Acme\\ExampleClass', $this->class->getName());
         $this->assertEquals('This is a description of this class', $this->class->getDescription());
@@ -40,9 +41,8 @@ class ReflectorTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($class->hasIgnoreTag());
     }
 
-    function testFunctions()
+    public function testFunctions()
     {
-
         $functions = $this->class->getFunctions();
 
         $this->assertNotEmpty($functions);
@@ -82,10 +82,11 @@ class ReflectorTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('\\Acme\\ExampleClass', $functions[6]->getReturnType());
         $this->assertEquals('protected', $functions[6]->getVisibility());
 
-        $this->assertTrue( empty($functions[7]) ); // Should be skipped since tagged with @ignore */
+        $this->assertTrue(empty($functions[7])); // Should be skipped since tagged with @ignore */
     }
 
-    function testStaticFunc() {
+    public function testStaticFunc()
+    {
         $reflector = new \PHPDocsMD\Reflector('Acme\\ClassWithStaticFunc');
         $functions = $reflector->getClassEntity()->getFunctions();
         $this->assertNotEmpty($functions);
@@ -98,7 +99,7 @@ class ReflectorTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('float', $functions[0]->getReturnType());
     }
 
-    function testParams()
+    public function testParams()
     {
         $paramA = new ReflectionParameter(array('Acme\\ExampleClass', 'funcD'), 2);
         $paramB = new ReflectionParameter(array('Acme\\ExampleClass', 'funcD'), 3);
@@ -133,7 +134,7 @@ class ReflectorTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('\\Acme\\ExampleInterface', $params[2]->getType());
     }
 
-    function testInheritedDocs()
+    public function testInheritedDocs()
     {
         $reflector = new \PHPDocsMD\Reflector('Acme\\ClassImplementingInterface');
         $functions = $reflector->getClassEntity()->getFunctions();
@@ -149,8 +150,7 @@ class ReflectorTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($functions[3]->isReturningNativeClass());
     }
 
-
-    function testReferenceToImportedClass()
+    public function testReferenceToImportedClass()
     {
         $reflector = new \PHPDocsMD\Reflector('Acme\\InterfaceReferringToImportedClass');
         $functions = $reflector->getClassEntity()->getFunctions();

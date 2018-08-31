@@ -1,4 +1,5 @@
 <?php
+
 namespace PHPDocsMD;
 
 /**
@@ -9,11 +10,11 @@ namespace PHPDocsMD;
  */
 class DocInfo
 {
+
     /**
      * @var array
      */
     private $data = [];
-
 
     /**
      * @param array $data
@@ -21,12 +22,12 @@ class DocInfo
     public function __construct(array $data)
     {
         $this->data = array_merge([
-            'return' => '',
-            'params' => [],
+            'return'      => '',
+            'params'      => [],
             'description' => '',
-            'example' => false,
-            'deprecated' => false
-        ], $data);
+            'example'     => false,
+            'deprecated'  => false
+            ], $data);
     }
 
     /**

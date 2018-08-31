@@ -1,8 +1,8 @@
 <?php
 
-class MDTableGeneratorTest extends PHPUnit_Framework_TestCase {
-
-    function testDeprecatedFunc()
+class MDTableGeneratorTest extends PHPUnit_Framework_TestCase
+{
+    public function testDeprecatedFunc()
     {
         $tbl = new \PHPDocsMD\MDTableGenerator();
         $tbl->openTable();
@@ -18,14 +18,14 @@ class MDTableGeneratorTest extends PHPUnit_Framework_TestCase {
         $tbl->addFunc($deprecated);
 
         $tblMarkdown = $tbl->getTable();
-        $expect = '| Visibility | Function |'.PHP_EOL.
-                '|:-----------|:---------|'.PHP_EOL.
-                '| public | <strike><strong>myFunc()</strong> : <em>mixed</em></strike><br /><em>DEPRECATED - Is deprecated</em> |';
+        $expect = '| Visibility | Function |' . PHP_EOL .
+            '|:-----------|:---------|' . PHP_EOL .
+            '| public | <strike><strong>myFunc()</strong> : <em>mixed</em></strike><br /><em>DEPRECATED - Is deprecated</em> |';
 
         $this->assertEquals($expect, $tblMarkdown);
     }
 
-    function testFunc()
+    public function testFunc()
     {
         $tbl = new \PHPDocsMD\MDTableGenerator();
         $tbl->openTable();
@@ -35,14 +35,14 @@ class MDTableGeneratorTest extends PHPUnit_Framework_TestCase {
         $tbl->addFunc($func);
 
         $tblMarkdown = $tbl->getTable();
-        $expect = '| Visibility | Function |'.PHP_EOL.
-                '|:-----------|:---------|'.PHP_EOL.
-                '| public | <strong>myFunc()</strong> : <em>void</em> |';
+        $expect = '| Visibility | Function |' . PHP_EOL .
+            '|:-----------|:---------|' . PHP_EOL .
+            '| public | <strong>myFunc()</strong> : <em>void</em> |';
 
         $this->assertEquals($expect, $tblMarkdown);
     }
 
-    function testFuncWithAllFeatures()
+    public function testFuncWithAllFeatures()
     {
         $tbl = new \PHPDocsMD\MDTableGenerator();
         $tbl->openTable();
@@ -84,14 +84,14 @@ class MDTableGeneratorTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('protected', $func->getVisibility());
 
         $tblMarkdown = $tbl->getTable();
-        $expect = '| Visibility | Function |'.PHP_EOL.
-                '|:-----------|:---------|'.PHP_EOL.
-                '| protected static | <strong>someFunc(</strong><em>mixed</em> <strong>$var=null</strong>, <em>string</em> <strong>$other=\'test\'</strong>)</strong> : <em>\\stdClass</em><br /><em>desc...</em> |';
+        $expect = '| Visibility | Function |' . PHP_EOL .
+            '|:-----------|:---------|' . PHP_EOL .
+            '| protected static | <strong>someFunc(</strong><em>mixed</em> <strong>$var=null</strong>, <em>string</em> <strong>$other=\'test\'</strong>)</strong> : <em>\\stdClass</em><br /><em>desc...</em> |';
 
         $this->assertEquals($expect, $tblMarkdown);
     }
 
-    function testToggleDeclaringAbstraction()
+    public function testToggleDeclaringAbstraction()
     {
         $tbl = new \PHPDocsMD\MDTableGenerator();
         $tbl->openTable();
@@ -102,8 +102,8 @@ class MDTableGeneratorTest extends PHPUnit_Framework_TestCase {
 
         $tbl->addFunc($func);
         $tblMarkdown = $tbl->getTable();
-        $expect = '| Visibility | Function |'.PHP_EOL.
-            '|:-----------|:---------|'.PHP_EOL.
+        $expect = '| Visibility | Function |' . PHP_EOL .
+            '|:-----------|:---------|' . PHP_EOL .
             '| public | <strong>abstract someFunc()</strong> : <em>void</em> |';
 
         $this->assertEquals($expect, $tblMarkdown);
@@ -113,11 +113,10 @@ class MDTableGeneratorTest extends PHPUnit_Framework_TestCase {
         $tbl->addFunc($func);
 
         $tblMarkdown = $tbl->getTable();
-        $expect = '| Visibility | Function |'.PHP_EOL.
-            '|:-----------|:---------|'.PHP_EOL.
+        $expect = '| Visibility | Function |' . PHP_EOL .
+            '|:-----------|:---------|' . PHP_EOL .
             '| public | <strong>someFunc()</strong> : <em>void</em> |';
 
         $this->assertEquals($expect, $tblMarkdown);
     }
-
 }

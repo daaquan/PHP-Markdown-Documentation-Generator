@@ -1,8 +1,8 @@
 <?php
+
 namespace PHPDocsMD;
 
 use ReflectionMethod;
-
 
 /**
  * Class that can compute ClassEntity objects out of real classes
@@ -10,6 +10,7 @@ use ReflectionMethod;
  */
 class Reflector implements ReflectorInterface
 {
+
     /**
      * @var string
      */
@@ -24,10 +25,12 @@ class Reflector implements ReflectorInterface
      * @var DocInfoExtractor
      */
     private $docInfoExtractor;
+
     /**
      * @var ClassEntityFactory
      */
     private $classEntityFactory;
+
     /**
      * @var UseInspector
      */
@@ -40,8 +43,8 @@ class Reflector implements ReflectorInterface
      * @param UseInspector $useInspector
      * @param ClassEntityFactory $classEntityFactory
      */
-    function __construct(
-        $className,
+    public function __construct(
+    $className,
         FunctionFinder $functionFinder = null,
         DocInfoExtractor $docInfoExtractor = null,
         UseInspector $useInspector = null,
@@ -57,16 +60,17 @@ class Reflector implements ReflectorInterface
             $this->docInfoExtractor
         );
     }
-    
-    private function loadIfNull($obj, $className, $in=null)
+
+    private function loadIfNull($obj, $className, $in = null)
     {
         return is_object($obj) ? $obj : new $className($in);
     }
-    
+
     /**
      * @return \PHPDocsMD\ClassEntity
      */
-    function getClassEntity() {
+    public function getClassEntity()
+    {
         $classReflection = new \ReflectionClass($this->className);
         $classEntity = $this->classEntityFactory->create($classReflection);
 
@@ -86,8 +90,7 @@ class Reflector implements ReflectorInterface
         $publicFunctions = [];
         $protectedFunctions = [];
 
-        foreach($reflectionClass->getMethods() as $methodReflection) {
-
+        foreach ($reflectionClass->getMethods() as $methodReflection) {
             $func = $this->createFunctionEntity(
                 $methodReflection,
                 $classEntity,
@@ -95,9 +98,9 @@ class Reflector implements ReflectorInterface
             );
 
 
-            if( $func ) {
-                if( $func->getVisibility() == 'public' ) {
-                    $publicFunctions[$func->getName()] =  $func;
+            if ($func) {
+                if ($func->getVisibility() == 'public') {
+                    $publicFunctions[$func->getName()] = $func;
                 } else {
                     $protectedFunctions[$func->getName()] = $func;
                 }
@@ -150,7 +153,7 @@ class Reflector implements ReflectorInterface
      * @return string
      */
     private function getReturnType(
-        DocInfo $docInfo,
+    DocInfo $docInfo,
         ReflectionMethod $method,
         FunctionEntity $func,
         array $useStatements
@@ -158,10 +161,10 @@ class Reflector implements ReflectorInterface
         $returnType = $docInfo->getReturnType();
         if (empty($returnType)) {
             $returnType = $this->guessReturnTypeFromFuncName($func->getName());
-        } elseif(Utils::isClassReference($returnType) && !self::classExists($returnType)) {
-            $isReferenceToArrayOfObjects = substr($returnType, -2) == '[]' ? '[]':'';
+        } elseif (Utils::isClassReference($returnType) && !self::classExists($returnType)) {
+            $isReferenceToArrayOfObjects = substr($returnType, -2) == '[]' ? '[]' : '';
             if ($isReferenceToArrayOfObjects) {
-                $returnType = substr($returnType, 0, strlen($returnType)-2);
+                $returnType = substr($returnType, 0, strlen($returnType) - 2);
             }
             $className = $this->stripAwayNamespace($returnType);
             foreach ($useStatements as $usedClass) {
@@ -176,7 +179,7 @@ class Reflector implements ReflectorInterface
         }
 
         return Utils::sanitizeDeclaration(
-            $returnType,
+                $returnType,
             $method->getDeclaringClass()->getNamespaceName()
         );
     }
@@ -208,8 +211,8 @@ class Reflector implements ReflectorInterface
     protected function shouldIgnoreFunction($info, ReflectionMethod $method, $class)
     {
         return $info->shouldBeIgnored() ||
-                $method->isPrivate() ||
-                !$class->isSame($method->getDeclaringClass()->getName());
+            $method->isPrivate() ||
+            !$class->isSame($method->getDeclaringClass()->getName());
     }
 
     /**
@@ -224,67 +227,69 @@ class Reflector implements ReflectorInterface
         $def = false;
         $type = 'mixed';
         $declaredType = self::getParamType($reflection);
-        if( !isset($docs['type']) )
+        if (!isset($docs['type'])) {
             $docs['type'] = '';
+        }
 
-        if( $declaredType && !($declaredType=='array' && substr($docs['type'], -2) == '[]') && $declaredType != $docs['type']) {
-            if( $declaredType && $docs['type'] ) {
+        if ($declaredType && !($declaredType == 'array' && substr($docs['type'], -2) == '[]') && $declaredType != $docs['type']) {
+            if ($declaredType && $docs['type']) {
                 $posClassA = Utils::getClassBaseName($docs['type']);
                 $posClassB = Utils::getClassBaseName($declaredType);
-                if( $posClassA == $posClassB ) {
+                if ($posClassA == $posClassB) {
                     $docs['type'] = $declaredType;
                 } else {
-                    $docs['type'] = empty($docs['type']) ? $declaredType : $docs['type'].'/'.$declaredType;
+                    $docs['type'] = empty($docs['type']) ? $declaredType : $docs['type'] . '/' . $declaredType;
                 }
             } else {
-                $docs['type'] = empty($docs['type']) ? $declaredType : $docs['type'].'/'.$declaredType;
+                $docs['type'] = empty($docs['type']) ? $declaredType : $docs['type'] . '/' . $declaredType;
             }
         }
 
         try {
             $def = $reflection->getDefaultValue();
             $type = $this->getTypeFromVal($def);
-            if( is_string($def) ) {
+            if (is_string($def)) {
                 $def = "`'$def'`";
-            } elseif( is_bool($def) ) {
-                $def = $def ? 'true':'false';
-            } elseif( is_null($def) ) {
+            } elseif (is_bool($def)) {
+                $def = $def ? 'true' : 'false';
+            } elseif (is_null($def)) {
                 $def = 'null';
-            } elseif( is_array($def) ) {
+            } elseif (is_array($def)) {
                 $def = 'array()';
             }
-        } catch(\Exception $e) {}
+        } catch (\Exception $e) {
+        }
 
-        $varName = '$'.$reflection->getName();
+        $varName = '$' . $reflection->getName();
 
-        if( !empty($docs) ) {
+        if (!empty($docs)) {
             $docs['default'] = $def;
-            if( $type == 'mixed' && $def == 'null' && strpos($docs['type'], '\\') === 0 ) {
+            if ($type == 'mixed' && $def == 'null' && strpos($docs['type'], '\\') === 0) {
                 $type = false;
             }
-            if( $type && $def && !empty($docs['type']) && $docs['type'] != $type && strpos($docs['type'], '|') === false) {
-                if( substr($docs['type'], strpos($docs['type'], '\\')) == substr($declaredType, strpos($declaredType, '\\')) ) {
+            if ($type && $def && !empty($docs['type']) && $docs['type'] != $type && strpos($docs['type'], '|') === false) {
+                if (substr($docs['type'], strpos($docs['type'], '\\')) == substr($declaredType, strpos($declaredType, '\\'))) {
                     $docs['type'] = $declaredType;
                 } else {
-                    $docs['type'] = ($type == 'mixed' ? '':$type.'/').$docs['type'];
+                    $docs['type'] = ($type == 'mixed' ? '' : $type . '/') . $docs['type'];
                 }
-            } elseif( $type && empty($docs['type']) ) {
+            } elseif ($type && empty($docs['type'])) {
                 $docs['type'] = $type;
             }
         } else {
             $docs = [
-                'descriptions'=>'',
-                'name' => $varName,
-                'default' => $def,
-                'type' => $type
+                'descriptions' => '',
+                'name'         => $varName,
+                'default'      => $def,
+                'type'         => $type
             ];
         }
 
         $param = new ParamEntity();
-        $param->setDescription(isset($docs['description']) ? $docs['description']:'');
+        $param->setDescription(isset($docs['description']) ? $docs['description'] : '');
         $param->setName($varName);
         $param->setDefault($docs['default']);
-        $param->setType(empty($docs['type']) ? 'mixed':str_replace(['|', '\\\\'], ['/', '\\'], $docs['type']));
+        $param->setType(empty($docs['type']) ? 'mixed' : str_replace(['|', '\\\\'], ['/', '\\'], $docs['type']));
         return $param;
     }
 
@@ -308,25 +313,26 @@ class Reflector implements ReflectorInterface
      * @param \ReflectionParameter $refParam
      * @return string
      */
-    static function getParamType(\ReflectionParameter $refParam)
+    public static function getParamType(\ReflectionParameter $refParam)
     {
-        $export = \ReflectionParameter::export([
+        $export = \ReflectionParameter::export(
+            [
                 $refParam->getDeclaringClass()->name,
                 $refParam->getDeclaringFunction()->name
-            ],
+                ],
             $refParam->name,
             true
         );
 
-        $export =  str_replace(' or NULL', '', $export);
+        $export = str_replace(' or NULL', '', $export);
 
-        $type = preg_replace('/.*?([\w\\\]+)\s+\$'.current(explode('=', $refParam->name)).'.*/', '\\1', $export);
-        if( strpos($type, 'Parameter ') !== false ) {
+        $type = preg_replace('/.*?([\w\\\]+)\s+\$' . current(explode('=', $refParam->name)) . '.*/', '\\1', $export);
+        if (strpos($type, 'Parameter ') !== false) {
             return '';
         }
 
-        if( $type != 'array' && strpos($type, '\\') !== 0 ) {
-            $type = '\\'.$type;
+        if ($type != 'array' && strpos($type, '\\') !== 0) {
+            $type = '\\' . $type;
         }
 
         return $type;
@@ -340,13 +346,15 @@ class Reflector implements ReflectorInterface
     {
         $mixed = ['get', 'load', 'fetch', 'find', 'create'];
         $bool = ['is', 'can', 'has', 'have', 'should'];
-        foreach($mixed as $prefix) {
-            if( strpos($name, $prefix) === 0 )
+        foreach ($mixed as $prefix) {
+            if (strpos($name, $prefix) === 0) {
                 return 'mixed';
+            }
         }
-        foreach($bool as $prefix) {
-            if( strpos($name, $prefix) === 0 )
+        foreach ($bool as $prefix) {
+            if (strpos($name, $prefix) === 0) {
                 return 'bool';
+            }
         }
         return 'void';
     }
@@ -357,11 +365,11 @@ class Reflector implements ReflectorInterface
      */
     private function getTypeFromVal($def)
     {
-        if( is_string($def) ) {
+        if (is_string($def)) {
             return 'string';
-        } elseif( is_bool($def) ) {
+        } elseif (is_bool($def)) {
             return 'bool';
-        } elseif( is_array($def) ) {
+        } elseif (is_array($def)) {
             return 'array';
         } else {
             return 'mixed';
@@ -387,7 +395,7 @@ class Reflector implements ReflectorInterface
             );
             if (!$inheritedFuncDeclaration) {
                 throw new \RuntimeException(
-                    'Function '.$funcName.' tries to inherit docs but no parent method is found'
+                'Function ' . $funcName . ' tries to inherit docs but no parent method is found'
                 );
             }
         }

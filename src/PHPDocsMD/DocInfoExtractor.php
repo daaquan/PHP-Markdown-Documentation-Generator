@@ -1,4 +1,5 @@
 <?php
+
 namespace PHPDocsMD;
 
 /**
@@ -7,6 +8,7 @@ namespace PHPDocsMD;
  */
 class DocInfoExtractor
 {
+
     /**
      * @param \ReflectionClass|\ReflectionMethod $reflection
      * @return DocInfo
@@ -51,48 +53,48 @@ class DocInfoExtractor
      * @param \ReflectionMethod|\ReflectionClass $reflection
      * @return array
      */
-    private function extractInfoFromComment($comment, $reflection, $current_tag='description')
+    private function extractInfoFromComment($comment, $reflection, $current_tag = 'description')
     {
         $currentNamespace = $this->getNameSpace($reflection);
-        $tags = [$current_tag=>''];
+        $tags = [$current_tag => ''];
 
-        foreach(explode(PHP_EOL, $comment) as $line) {
-
-            if( $current_tag != 'example' )
+        foreach (explode(PHP_EOL, $comment) as $line) {
+            if ($current_tag != 'example') {
                 $line = trim($line);
+            }
 
             $words = $this->getWordsFromLine($line);
-            if( empty($words) )
+            if (empty($words)) {
                 continue;
+            }
 
-            if( strpos($words[0], '@') === false ) {
+            if (strpos($words[0], '@') === false) {
                 // Append to tag
                 $joinWith = $current_tag == 'example' ? PHP_EOL : ' ';
                 $tags[$current_tag] .= $joinWith . $line;
-            }
-            elseif( $words[0] == '@param' ) {
+            } elseif ($words[0] == '@param') {
                 // Get parameter declaration
-                if( $paramData = $this->figureOutParamDeclaration($words, $currentNamespace) ) {
+                if ($paramData = $this->figureOutParamDeclaration($words, $currentNamespace)) {
                     list($name, $data) = $paramData;
                     $tags['params'][$name] = $data;
                 }
-            }
-            else {
+            } else {
                 // Start new tag
                 $current_tag = substr($words[0], 1);
-                array_splice($words, 0 ,1);
-                if( empty($tags[$current_tag]) ) {
+                array_splice($words, 0, 1);
+                if (empty($tags[$current_tag])) {
                     $tags[$current_tag] = '';
                 }
                 $tags[$current_tag] .= trim(join(' ', $words));
             }
         }
 
-        foreach($tags as $name => $val) {
-            if( is_array($val) ) {
-                foreach($val as $subName=>$subVal) {
-                    if( is_string($subVal) )
+        foreach ($tags as $name => $val) {
+            if (is_array($val)) {
+                foreach ($val as $subName => $subVal) {
+                    if (is_string($subVal)) {
                         $tags[$name][$subName] = trim($subVal);
+                    }
                 }
             } else {
                 $tags[$name] = trim($val);
@@ -122,8 +124,8 @@ class DocInfoExtractor
     private function getWordsFromLine($line)
     {
         $words = [];
-        foreach(explode(' ', trim($line)) as $w) {
-            if( !empty($w) ) {
+        foreach (explode(' ', trim($line)) as $w) {
+            if (!empty($w)) {
                 $words[] = $w;
             }
         }
@@ -153,7 +155,7 @@ class DocInfoExtractor
 
         if (!empty($name)) {
             $name = current(explode('=', $name));
-            if( count($words) > 1 ) {
+            if (count($words) > 1) {
                 $description = join(' ', $words);
             }
 
@@ -161,9 +163,9 @@ class DocInfoExtractor
 
             $data = [
                 'description' => $description,
-                'name' => $name,
-                'type' => $type,
-                'default' => false
+                'name'        => $name,
+                'type'        => $type,
+                'default'     => false
             ];
 
             return [$name, $data];

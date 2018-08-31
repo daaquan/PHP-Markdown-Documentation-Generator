@@ -1,6 +1,6 @@
 <?php
-namespace PHPDocsMD;
 
+namespace PHPDocsMD;
 
 /**
  * Interface for classes that can compute ClassEntity objects
@@ -12,5 +12,5 @@ interface ReflectorInterface
     /**
      * @return \PHPDocsMD\ClassEntity
      */
-    function getClassEntity();
+    public function getClassEntity();
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace PHPDocsMD;
 
 /**
@@ -7,6 +8,7 @@ namespace PHPDocsMD;
  */
 class ClassEntityFactory
 {
+
     /**
      * @var DocInfoExtractor
      */
@@ -36,5 +38,4 @@ class ClassEntityFactory
 
         return $class;
     }
-
 }

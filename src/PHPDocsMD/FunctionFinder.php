@@ -1,4 +1,5 @@
 <?php
+
 namespace PHPDocsMD;
 
 /**
@@ -7,6 +8,7 @@ namespace PHPDocsMD;
  */
 class FunctionFinder
 {
+
     /**
      * @var array
      */
@@ -38,12 +40,12 @@ class FunctionFinder
         if ($className) {
             $classEntity = $this->loadClassEntity($className);
             $functions = $classEntity->getFunctions();
-            foreach($functions as $function) {
-                if($function->getName() == $methodName) {
+            foreach ($functions as $function) {
+                if ($function->getName() == $methodName) {
                     return $function;
                 }
             }
-            if($classEntity->getExtends()) {
+            if ($classEntity->getExtends()) {
                 return $this->find($methodName, $classEntity->getExtends());
             }
         }

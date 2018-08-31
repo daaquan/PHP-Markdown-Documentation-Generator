@@ -1,4 +1,5 @@
 <?php
+
 namespace PHPDocsMD;
 
 /**
@@ -13,7 +14,7 @@ class Utils
      */
     public static function sanitizeClassName($name)
     {
-        return '\\'.trim($name, ' \\');
+        return '\\' . trim($name, ' \\');
     }
 
     /**
@@ -32,10 +33,10 @@ class Utils
      * @param string $delimiter
      * @return string
      */
-    public static function sanitizeDeclaration($typeDeclaration, $currentNameSpace, $delimiter='|')
+    public static function sanitizeDeclaration($typeDeclaration, $currentNameSpace, $delimiter = '|')
     {
         $parts = explode($delimiter, $typeDeclaration);
-        foreach($parts as $i=>$p) {
+        foreach ($parts as $i => $p) {
             if (self::shouldPrefixWithNamespace($p)) {
                 $p = self::sanitizeClassName('\\' . trim($currentNameSpace, '\\') . '\\' . $p);
             } elseif (self::isClassReference($p)) {

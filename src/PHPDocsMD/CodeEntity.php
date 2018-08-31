@@ -1,17 +1,18 @@
 <?php
-namespace PHPDocsMD;
 
+namespace PHPDocsMD;
 
 /**
  * Object describing a piece of code
  * @package PHPDocsMD
  */
-class CodeEntity {
+class CodeEntity
+{
 
     /**
      * @var string
      */
-    private $name='';
+    private $name = '';
 
     /**
      * @var string
@@ -33,17 +34,16 @@ class CodeEntity {
      */
     private $example = '';
 
-
     /**
      * @param bool $toggle
      * @return void|bool
      */
-    public function isDeprecated($toggle=null)
+    public function isDeprecated($toggle = null)
     {
-        if( $toggle === null ) {
+        if ($toggle === null) {
             return $this->isDeprecated;
         } else {
-            return $this->isDeprecated = (bool)$toggle;
+            return $this->isDeprecated = (bool) $toggle;
         }
     }
 

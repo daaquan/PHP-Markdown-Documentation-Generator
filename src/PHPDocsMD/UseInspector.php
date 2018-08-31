@@ -1,4 +1,5 @@
 <?php
+
 namespace PHPDocsMD;
 
 /**
@@ -17,8 +18,8 @@ class UseInspector
         $usages = [];
         $chunks = array_slice(preg_split('/use[\s+]/', $content), 1);
         foreach ($chunks as $chunk) {
-                $usage = trim(current(explode(';', $chunk)));
-                $usages[] = Utils::sanitizeClassName($usage);
+            $usage = trim(current(explode(';', $chunk)));
+            $usages[] = Utils::sanitizeClassName($usage);
         }
 
         return $usages;
@@ -46,5 +47,4 @@ class UseInspector
         }
         return $classUseStatements;
     }
-
 }

@@ -1,12 +1,13 @@
 <?php
-namespace PHPDocsMD;
 
+namespace PHPDocsMD;
 
 /**
  * Object describing a class or an interface
  * @package PHPDocsMD
  */
-class ClassEntity extends CodeEntity {
+class ClassEntity extends CodeEntity
+{
 
     /**
      * @var \PHPDocsMD\FunctionEntity[]
@@ -47,12 +48,12 @@ class ClassEntity extends CodeEntity {
      * @param bool $toggle
      * @return bool
      */
-    public function isAbstract($toggle=null)
+    public function isAbstract($toggle = null)
     {
-        if ( $toggle === null ) {
+        if ($toggle === null) {
             return $this->abstract;
         } else {
-            return $this->abstract = (bool)$toggle;
+            return $this->abstract = (bool) $toggle;
         }
     }
 
@@ -60,12 +61,12 @@ class ClassEntity extends CodeEntity {
      * @param bool $toggle
      * @return bool
      */
-    public function hasIgnoreTag($toggle=null)
+    public function hasIgnoreTag($toggle = null)
     {
-        if( $toggle === null ) {
+        if ($toggle === null) {
             return $this->hasIgnoreTag;
         } else {
-            return $this->hasIgnoreTag = (bool)$toggle;
+            return $this->hasIgnoreTag = (bool) $toggle;
         }
     }
 
@@ -73,12 +74,12 @@ class ClassEntity extends CodeEntity {
      * @param bool $toggle
      * @return bool
      */
-    public function isInterface($toggle=null)
+    public function isInterface($toggle = null)
     {
-        if( $toggle === null ) {
+        if ($toggle === null) {
             return $this->isInterface;
         } else {
-            return $this->isInterface = (bool)$toggle;
+            return $this->isInterface = (bool) $toggle;
         }
     }
 
@@ -86,12 +87,12 @@ class ClassEntity extends CodeEntity {
      * @param bool $toggle
      * @return bool
      */
-    public function isNative($toggle=null)
+    public function isNative($toggle = null)
     {
-        if( $toggle === null ) {
+        if ($toggle === null) {
             return $this->isNative;
         } else {
-            return $this->isNative = (bool)$toggle;
+            return $this->isNative = (bool) $toggle;
         }
     }
 
@@ -125,7 +126,7 @@ class ClassEntity extends CodeEntity {
     public function setInterfaces(array $implements)
     {
         $this->interfaces = [];
-        foreach($implements as $interface) {
+        foreach ($implements as $interface) {
             $this->interfaces[] = Utils::sanitizeClassName($interface);
         }
     }
@@ -149,7 +150,7 @@ class ClassEntity extends CodeEntity {
     /**
      * @param string $name
      */
-    function setName($name)
+    public function setName($name)
     {
         parent::setName(Utils::sanitizeClassName($name));
     }
@@ -159,7 +160,7 @@ class ClassEntity extends CodeEntity {
      * @param string|object $class
      * @return bool
      */
-    function isSame($class)
+    public function isSame($class)
     {
         $className = is_object($class) ? get_class($class) : $class;
         return Utils::sanitizeClassName($className) == $this->getName();
@@ -170,19 +171,20 @@ class ClassEntity extends CodeEntity {
      * @param string $format
      * @return string
      */
-    function generateTitle($format='%label%: %name% %extra%')
+    public function generateTitle($format = '%label%: %name% %extra%')
     {
         $translate = [
             '%label%' => $this->isInterface() ? 'Interface' : 'Class',
-            '%name%' => substr_count($this->getName(), '\\') == 1 ? substr($this->getName(), 1) : $this->getName(),
+            '%name%'  => substr_count($this->getName(), '\\') == 1 ? substr($this->getName(), 1) : $this->getName(),
             '%extra%' => ''
         ];
 
-        if( strpos($format, '%label%') === false ) {
-            if( $this->isInterface() )
+        if (strpos($format, '%label%') === false) {
+            if ($this->isInterface()) {
                 $translate['%extra%'] = '(interface)';
-            elseif( $this->isAbstract() )
+            } elseif ($this->isAbstract()) {
                 $translate['%extra%'] = '(abstract)';
+            }
         } else {
             $translate['%extra%'] = $this->isAbstract() && !$this->isInterface() ? '(abstract)' : '';
         }
@@ -194,7 +196,7 @@ class ClassEntity extends CodeEntity {
      * Generates an anchor link out of the generated title (see generateTitle)
      * @return string
      */
-    function generateAnchor()
+    public function generateAnchor()
     {
         $title = $this->generateTitle();
         return strtolower(str_replace([':', ' ', '\\', '(', ')'], ['', '-', '', '', ''], $title));

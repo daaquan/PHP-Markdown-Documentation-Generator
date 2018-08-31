@@ -1,12 +1,13 @@
 <?php
-namespace PHPDocsMD;
 
+namespace PHPDocsMD;
 
 /**
  * Object describing a function
  * @package PHPDocsMD
  */
-class FunctionEntity extends CodeEntity {
+class FunctionEntity extends CodeEntity
+{
 
     /**
      * @var \PHPDocsMD\ParamEntity[]
@@ -46,36 +47,36 @@ class FunctionEntity extends CodeEntity {
     /**
      * @param bool $toggle
      */
-    public function isStatic($toggle=null)
+    public function isStatic($toggle = null)
     {
-        if ( $toggle === null ) {
+        if ($toggle === null) {
             return $this->isStatic;
         } else {
-            return $this->isStatic = (bool)$toggle;
+            return $this->isStatic = (bool) $toggle;
         }
     }
 
     /**
      * @param bool $toggle
      */
-    public function isAbstract($toggle=null)
+    public function isAbstract($toggle = null)
     {
-        if ( $toggle === null ) {
+        if ($toggle === null) {
             return $this->abstract;
         } else {
-            return $this->abstract = (bool)$toggle;
+            return $this->abstract = (bool) $toggle;
         }
     }
 
     /**
      * @param bool $toggle
      */
-    public function isReturningNativeClass($toggle=null)
+    public function isReturningNativeClass($toggle = null)
     {
-        if ( $toggle === null ) {
+        if ($toggle === null) {
             return $this->isReturningNativeClass;
         } else {
-            return $this->isReturningNativeClass = (bool)$toggle;
+            return $this->isReturningNativeClass = (bool) $toggle;
         }
     }
 
@@ -151,4 +152,3 @@ class FunctionEntity extends CodeEntity {
         return $this->class;
     }
 }
-
