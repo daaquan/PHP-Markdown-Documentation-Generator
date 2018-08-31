@@ -1,3 +1,16 @@
+forked from victorjonsson/PHP-Markdown-Documentation-Generator
+
+
+# Installtion
+
+```
+$ composer global require daaquan/php-markdown-documentation-generator
+
+$ php-doc-md -h
+```
+
+for old versions.
+
 # PHP-Markdown-Documentation-Generator
 
 Documentation is just as important as the code it's refering to. With this command line tool 
