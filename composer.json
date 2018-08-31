@@ -4,7 +4,7 @@
   "minimum-stability": "dev",
   "homepage": "https://github.com/daaquan/php-markdown-documentation-generator",
   "license": "MIT",
-  "version": "2.0",
+  "version": "2.0.1",
   "authors": [{
       "name": "Victor Jonsson",
       "email": "kontakt@victorjonsson.se"
